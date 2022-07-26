@@ -1,4 +1,3 @@
-from turtle import window_width
 import pygame as pg
 import sys
 import random
@@ -123,7 +122,7 @@ class Bomb3:
 
 class Shot:
     def __init__(self, chr: Bird):
-        self.sfc = pg.image.load("image_gl/bullet.png")
+        self.sfc = pg.image.load("fig/bullet.png")
         self.sfc = pg.transform.rotozoom(self.sfc, -90, 1.0)  # Surface
         self.rct = self.sfc.get_rect()          # Rect
         self.rct.midleft = chr.rct.center
@@ -228,15 +227,15 @@ def main():
     screen = pg.display.set_mode((1600,900))           #1600x900のウィンドウ作成
     clock = pg.time.Clock()
     scr = Screen("逃げろ!こうかとん",(1600,900),"fig/town.jpg")
-    kkt = Player("image_gl/starship.png", 1.0, (900, 400))
-    enemy1 = Enemy("image_gl/enemy3.png", 0.7, (-2, 1), scr)
+    kkt = Player("fig/starship.png", 1.0, (900, 400))
+    enemy1 = Enemy("fig/enemy3.png", 0.7, (-2, 1), scr)
     boss = 0
     bkd2 = Bomb2((255,0,0), 10, (+1, +1), scr)
     bkd3 = Bomb3((255,0,0), 10, (+1, +1), scr)
     kill = 0#撃破数
     hp = 10
 
-    t_bgimg_sfc = pg.image.load("fig/title.png")
+    t_bgimg_sfc = pg.image.load("fig/sky14.png")
     t_bgimg_sfc = pg.transform.rotozoom(t_bgimg_sfc, 0, 0.84) #サイズ変更
     t_bgimg_rect = t_bgimg_sfc.get_rect()
     screen.blit(t_bgimg_sfc, t_bgimg_rect)
@@ -260,7 +259,7 @@ def main():
                 scr.blit()
                 font = pg.font.Font(None,70)
                 txt = font.render(f"kill:{kill}",True, "BLUE")
-                screen.blit(txt,[400,600])
+                screen.blit(txt,[100,50])
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
                         return
@@ -269,7 +268,7 @@ def main():
                         pg.mixer.music.play(-1)
                         beams.append(kkt.attack())
                     if event.type == 35:
-                        enemy1 = Enemy("image_gl/enemy3.png", 0.7, (-2, 1), scr)
+                        enemy1 = Enemy("fig/enemy3.png", 0.7, (-2, 1), scr)
 
 
                 kkt.update(scr)
@@ -282,7 +281,7 @@ def main():
                         beam.update(scr)
                         if enemy1.rct.colliderect(beam.rct):
                             del enemy1
-                            enemy1 = Enemy("image_gl/enemy3.png", 0.7, (-2, 1), scr)
+                            enemy1 = Enemy("fig/enemy3.png", 0.7, (-2, 1), scr)
                             kill += 1
                         if boss != 0:
                             if boss.rct.colliderect(beam.rct):
@@ -291,7 +290,7 @@ def main():
                                 return
                         if boss == 0:
                             if kill == 5:
-                                boss = Boss("image_gl/enemy_boss.png", 0.5, (-2, -2), scr)
+                                boss = Boss("fig/enemy_boss.png", 0.5, (-2, -2), scr)
                                 #hp = 10
                             
                 if kkt.rct.colliderect(enemy1.rct): #爆弾インスタンスのrect変数
